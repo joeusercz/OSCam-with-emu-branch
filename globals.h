@@ -1093,6 +1093,9 @@ typedef struct ecm_request_t
 #endif
 	struct ecm_request_t    *parent;
 	struct ecm_request_t    *next;
+#ifdef HAVE_DVBAPI
+	uint8_t		adapter_index;
+#endif
 } ECM_REQUEST;
 
 
@@ -2099,7 +2102,7 @@ struct s_config
 	uint32_t        cc_recv_timeout;                // The poll() timeout parameter in ms. Default: DEFAULT_CC_RECV_TIMEOUT (2000 ms).
 #endif
 #ifdef MODULE_GBOX
-    #define         GBOX_MY_VERS_DEF       0x25
+    #define         GBOX_MY_VERS_DEF       0x2A
     #define         GBOX_MY_CPU_API_DEF    0x40
     #define        	GBOX_MAX_PROXY_CARDS   32
     #define        	GBOX_MAX_IGNORED_PEERS 16
