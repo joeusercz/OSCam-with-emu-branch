@@ -3356,7 +3356,8 @@ int32_t dvbapi_parse_capmt(unsigned char *buffer, uint32_t length, int32_t connf
 	uint32_t es_info_length = 0, vpid = 0;
 	struct s_dvbapi_priority *addentry;
 
-	if(cfg.dvbapi_extended_cw_api == 1) max_pids = cfg.dvbapi_extended_cw_pids;
+//	if(cfg.dvbapi_extended_cw_api == 1) max_pids = cfg.dvbapi_extended_cw_pids;
+        if(demux[demux_id].ECMpids[0].CAID>>8 == 0x0E) max_pids = cfg.dvbapi_extended_cw_pids;
 
 	for(i = program_info_length + program_info_start; i + 4 < length; i += es_info_length + 5)
 	{
