@@ -3193,6 +3193,7 @@ int32_t dvbapi_parse_capmt(unsigned char *buffer, uint32_t length, int32_t connf
 {
 	uint32_t i = 0, start_descrambling = 0;
 	int32_t j = 0;
+	int32_t max_pids = 64;
 	int32_t demux_id = -1;
 	uint16_t demux_index, adapter_index, pmtpid;
 	uint32_t ca_mask;
@@ -3355,6 +3356,8 @@ int32_t dvbapi_parse_capmt(unsigned char *buffer, uint32_t length, int32_t connf
 	uint32_t es_info_length = 0, vpid = 0;
 	struct s_dvbapi_priority *addentry;
 
+	if(cfg.dvbapi_extended_cw_api == 1) max_pids = cfg.dvbapi_extended_cw_pids;
+
 	for(i = program_info_length + program_info_start; i + 4 < length; i += es_info_length + 5)
 	{
 		uint8_t stream_type = buffer[i];
@@ -3362,7 +3365,7 @@ int32_t dvbapi_parse_capmt(unsigned char *buffer, uint32_t length, int32_t connf
 		uint8_t is_audio = 0;
 		es_info_length = b2i(2, buffer + i +3)&0x0FFF;
 
-		if(demux[demux_id].STREAMpidcount < ECM_PIDS)
+		if(demux[demux_id].STREAMpidcount < max_pids ) //ECM_PIDS)
 		{
 
 			demux[demux_id].STREAMpids[demux[demux_id].STREAMpidcount] = elementary_pid;
